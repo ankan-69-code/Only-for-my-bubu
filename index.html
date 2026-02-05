@@ -4,257 +4,104 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A Cute Surprise</title>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* --- 1. THE FOUNDATION (Dreamy & Soft) --- */
+        /* --- 1. THE FOUNDATION --- */
         body {
             font-family: 'Quicksand', sans-serif;
-            margin: 0;
-            height: 100vh;
-            overflow: hidden;
-            /* Soft Pastel Gradient */
+            margin: 0; height: 100vh; overflow: hidden;
             background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
             background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
             color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            display: flex; justify-content: center; align-items: center;
             user-select: none;
         }
 
-        /* Floating Hearts Background */
-        .heart-bg {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; overflow: hidden; z-index: 0;
-        }
-        .heart-particle {
-            position: absolute;
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 20px;
-            animation: floatUp linear infinite;
-        }
-        @keyframes floatUp {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
-        }
+        /* Heart Background */
+        .heart-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+        .heart-particle { position: absolute; color: rgba(255, 255, 255, 0.4); font-size: 20px; animation: floatUp linear infinite; }
+        @keyframes floatUp { 0% { transform: translateY(100vh) rotate(0deg); opacity: 1; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
 
         body.faded-black { background: #000 !important; }
         .hidden { display: none !important; }
+        .container { position: relative; z-index: 10; width: 100%; max-width: 800px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 600px; }
 
-        /* Centered Container */
-        .container {
-            position: relative;
-            z-index: 10;
-            width: 100%;
-            max-width: 800px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 600px;
-        }
+        /* --- 2. LOCK SCREEN --- */
+        .lock-stack { display: flex; flex-direction: column; align-items: center; gap: 20px; animation: fadeIn 1.5s ease; text-align: center; }
+        h2 { font-family: 'Pacifico', cursive; font-size: 2.5rem; margin: 0; color: #fff; text-shadow: 0 4px 10px rgba(0,0,0,0.1); line-height: 1.2; }
+        .hint-text { font-size: 1rem; color: rgba(255,255,255,0.9); margin-top: -10px; font-style: italic; }
 
-        /* --- 2. CUTE LOCK SCREEN --- */
-        .lock-stack {
-            display: flex; flex-direction: column; align-items: center; gap: 20px;
-            animation: fadeIn 1.5s ease;
-            text-align: center;
-        }
-
-        h2 {
-            font-family: 'Pacifico', cursive;
-            font-size: 2.5rem;
-            margin: 0;
-            color: #fff;
-            text-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            line-height: 1.2;
-        }
-        
-        /* New Hint Style */
-        .hint-text {
-            font-size: 1rem; color: rgba(255,255,255,0.9); margin-top: -10px; font-style: italic;
-        }
-
-        /* Heart Shaped Lock */
-        .lock-graphic {
-            position: relative; width: 100px; height: 90px;
-            margin-top: 10px; margin-bottom: 20px;
-            animation: heartbeat 3s infinite ease-in-out;
-        }
+        .lock-graphic { position: relative; width: 100px; height: 90px; margin-top: 10px; margin-bottom: 20px; animation: heartbeat 3s infinite ease-in-out; }
         @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
-
-        .shackle {
-            width: 50px; height: 50px;
-            border: 6px solid #fff; border-bottom: none; border-radius: 50px 50px 0 0;
-            position: absolute; top: -30px; left: 50%; transform: translateX(-50%);
-            z-index: 1; transition: 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            transform-origin: 100% 100%;
-        }
-        /* Heart Body using SVG */
-        .heart-body {
-            width: 100px; height: 90px;
-            background-color: #ff9a9e; /* Cute Pink */
-            position: absolute; top: 0; left: 0; z-index: 2;
-            mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>") no-repeat center/contain;
-            -webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>") no-repeat center/contain;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            transition: background-color 0.5s;
-        }
-        .keyhole {
-            width: 8px; height: 14px; background: rgba(255,255,255,0.6);
-            position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);
-            border-radius: 10px;
-        }
-
+        .shackle { width: 50px; height: 50px; border: 6px solid #fff; border-bottom: none; border-radius: 50px 50px 0 0; position: absolute; top: -30px; left: 50%; transform: translateX(-50%); z-index: 1; transition: 0.6s; transform-origin: 100% 100%; }
+        .heart-body { width: 100px; height: 90px; background-color: #ff9a9e; position: absolute; top: 0; left: 0; z-index: 2; mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>") no-repeat center/contain; -webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>") no-repeat center/contain; transition: background-color 0.5s; }
+        .keyhole { width: 8px; height: 14px; background: rgba(255,255,255,0.6); position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); border-radius: 10px; }
         .unlocked .shackle { transform: translateX(-50%) translateY(-20px) rotate(-45deg); }
-        .unlocked .heart-body { background-color: #ffecd2; /* Pale Gold/Peach */ }
+        .unlocked .heart-body { background-color: #ffecd2; }
 
-        /* Cute Input */
-        input {
-            background: rgba(255,255,255,0.2);
-            border: 2px solid rgba(255,255,255,0.5);
-            border-radius: 30px;
-            font-family: 'Quicksand', sans-serif;
-            font-weight: bold;
-            font-size: 1.5rem;
-            color: #fff;
-            text-align: center;
-            letter-spacing: 2px;
-            width: 250px;
-            outline: none;
-            padding: 10px 20px;
-            transition: 0.3s;
-        }
+        input { background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.5); border-radius: 30px; font-family: 'Quicksand', sans-serif; font-weight: bold; font-size: 1.5rem; color: #fff; text-align: center; letter-spacing: 2px; width: 250px; outline: none; padding: 10px 20px; transition: 0.3s; }
         input:focus { background: rgba(255,255,255,0.4); width: 270px; }
         input::placeholder { color: rgba(255,255,255,0.5); font-size: 1rem; letter-spacing: 1px; }
 
-        button.action-btn {
-            background: #fff;
-            color: #d57eeb;
-            border: none;
-            border-radius: 30px;
-            padding: 12px 35px;
-            font-family: 'Quicksand', sans-serif;
-            font-weight: bold;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
+        button.action-btn { background: #fff; color: #d57eeb; border: none; border-radius: 30px; padding: 12px 35px; font-family: 'Quicksand', sans-serif; font-weight: bold; font-size: 1rem; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         button.action-btn:hover { transform: translateY(-3px) scale(1.05); background: #fdfbfb; }
 
-        /* --- 3. CUTE SCROLL --- */
+        /* --- 3. SCROLL --- */
         #scroll-wrapper { width: 100%; display: flex; justify-content: center; }
         #scroll-container { width: 500px; position: relative; cursor: pointer; }
-        
-        .roller {
-            height: 25px; background: #e6b98a; /* Light Wood */
-            border-radius: 10px; position: relative; z-index: 5;
-            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-        }
-        #scroll-paper {
-            background: #fffdf5; /* Cream Paper */
-            color: #555;
-            width: 90%; margin: 0 auto; max-height: 0; overflow: hidden;
-            transition: 1.5s cubic-bezier(0.25, 1, 0.5, 1);
-            font-family: 'Pacifico', cursive; font-size: 1.8rem; text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
+        .roller { height: 25px; background: #e6b98a; border-radius: 10px; position: relative; z-index: 5; box-shadow: 0 5px 10px rgba(0,0,0,0.1); }
+        #scroll-paper { background: #fffdf5; color: #555; width: 90%; margin: 0 auto; max-height: 0; overflow: hidden; transition: 1.5s cubic-bezier(0.25, 1, 0.5, 1); font-family: 'Pacifico', cursive; font-size: 1.8rem; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         .scroll-open #scroll-paper { max-height: 500px; padding: 40px 20px; }
-        
-        .seal {
-            width: 50px; height: 50px; background: #ff9a9e;
-            border-radius: 50%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            display: flex; align-items: center; justify-content: center;
-            color: white; font-size: 10px; z-index: 10;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
+        .seal { width: 50px; height: 50px; background: #ff9a9e; border-radius: 50%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; align-items: center; justify-content: center; color: white; font-size: 10px; z-index: 10; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .scroll-open .seal { opacity: 0; pointer-events: none; }
 
         /* --- 4. GAME --- */
         #game-screen { width: 100%; display: flex; flex-direction: column; align-items: center; }
         .game-hud { margin-bottom: 20px; height: 60px; display: flex; flex-direction: column; justify-content: center; }
-        
-        .board {
-            width: 100%; max-width: 700px; height: 400px;
-            background: rgba(255,255,255,0.3); /* Glass Board */
-            border: 2px solid rgba(255,255,255,0.5); border-radius: 20px;
-            position: relative; display: flex; justify-content: space-around; align-items: center;
-            cursor: pointer;
-        }
+        .board { width: 100%; max-width: 700px; height: 400px; background: rgba(255,255,255,0.3); border: 2px solid rgba(255,255,255,0.5); border-radius: 20px; position: relative; display: flex; justify-content: space-around; align-items: center; cursor: pointer; }
 
-        .balloon {
-            width: 70px; height: 90px; border-radius: 50%; position: absolute; z-index: 2; cursor: pointer;
-            box-shadow: inset -5px -5px 10px rgba(0,0,0,0.1), 5px 5px 15px rgba(255,255,255,0.5);
-            animation: float 3s ease-in-out infinite;
-        }
-        /* Pastel Balloons */
+        .balloon { width: 70px; height: 90px; border-radius: 50%; position: absolute; z-index: 2; cursor: pointer; box-shadow: inset -5px -5px 10px rgba(0,0,0,0.1), 5px 5px 15px rgba(255,255,255,0.5); animation: float 3s ease-in-out infinite; }
         .b1 { background: radial-gradient(circle at 30% 30%, #ff9a9e, #fecfef); }
         .b2 { background: radial-gradient(circle at 30% 30%, #a18cd1, #fbc2eb); }
         .b3 { background: radial-gradient(circle at 30% 30%, #84fab0, #8fd3f4); }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
+        /* PHOTO & MEMORY CARD */
+        .memory-card {
+            position: absolute; z-index: 1;
+            transform: scale(0); opacity: 0; transition: 0.5s ease;
+            display: flex; flex-direction: column; align-items: center;
+        }
         .photo-reveal {
             width: 140px; height: 140px; object-fit: cover; border: 5px solid #fff; border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2); position: absolute; z-index: 1;
-            transform: scale(0); opacity: 0; transition: 0.5s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .memory-note {
+            background: #fff; color: #d57eeb; font-family: 'Pacifico', cursive; font-size: 1rem;
+            padding: 5px 15px; border-radius: 15px; margin-top: 10px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1); text-align: center; white-space: nowrap;
         }
         .revealed { transform: scale(1.4); opacity: 1; z-index: 10; }
 
         /* --- 5. FINALE --- */
-        video {
-            width: 100%; max-width: 600px; border-radius: 15px;
-            border: 4px solid #fff; box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-        }
+        #transition-text { font-family: 'Pacifico', cursive; font-size: 2.5rem; color: #fff; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0; transition: opacity 2s; text-align: center; width: 100%; text-shadow: 0 0 10px #ff9a9e; }
 
-        #transition-text {
-            font-family: 'Pacifico', cursive; font-size: 2.5rem; color: #fff;
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            opacity: 0; transition: opacity 2s; text-align: center; width: 100%;
-            text-shadow: 0 0 10px #ff9a9e;
-        }
-
-        /* Fixed Spotify Card */
-        .spotify-card {
-            background: rgba(255, 255, 255, 0.1); /* Glass Effect */
-            backdrop-filter: blur(10px);
-            padding: 25px; border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.3);
-            width: 300px; text-align: center;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-        }
+        .spotify-card { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); padding: 25px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.3); width: 300px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
         .spotify-img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
         .song-info h2 { font-family: 'Quicksand', sans-serif; font-size: 1.4rem; margin-bottom: 5px; color: #fff; }
         .song-info p { color: #eee; font-size: 0.9rem; margin: 0; }
-        
         .progress-bar { width: 100%; height: 5px; background: rgba(255,255,255,0.2); margin: 20px 0; border-radius: 5px; }
         .progress-fill { width: 0%; height: 100%; background: #fff; border-radius: 5px; }
-
-        /* Play Button Logic */
-        .play-btn {
-            background: #fff; color: #d57eeb;
-            border-radius: 50%; width: 55px; height: 55px;
-            font-size: 22px; border: none; cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            display: flex; align-items: center; justify-content: center;
-            transition: 0.2s;
-        }
+        .play-btn { background: #fff; color: #d57eeb; border-radius: 50%; width: 55px; height: 55px; font-size: 22px; border: none; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; transition: 0.2s; }
         .play-btn:hover { transform: scale(1.1); }
 
-        /* Cute White Gun Silhouette */
-        .realistic-gun {
-            position: fixed; bottom: -20px; left: 50%; transform: translateX(-50%);
-            display: flex; flex-direction: column; align-items: center;
-            pointer-events: none; z-index: 100; opacity: 0.9;
-        }
+        .realistic-gun { position: fixed; bottom: -20px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; pointer-events: none; z-index: 100; opacity: 0.9; }
         .metal { background: #fff; border: 1px solid #eee; }
         .gun-scope { width: 20px; height: 15px; margin-bottom: -5px; background: #fff; }
         .gun-barrel-long { width: 8px; height: 120px; }
         .gun-body { width: 30px; height: 50px; }
         .recoil { animation: kick 0.15s ease; }
         @keyframes kick { 0% { bottom: -20px; } 50% { bottom: -40px; } 100% { bottom: -20px; } }
-
     </style>
 </head>
 <body>
@@ -299,43 +146,36 @@
         <div id="game-screen" class="hidden" onclick="fireGun()">
             <div class="game-hud">
                 <div id="next-stage-btn" class="hidden">
-                    <button class="action-btn" onclick="goToVault()">One Last Surprise ↓</button>
+                    <button class="action-btn" onclick="triggerFinale()">One Last Surprise ↓</button>
                 </div>
                 <h2 id="game-title" style="font-size: 2rem;">Pop the Balloons!</h2>
             </div>
             
             <div class="board">
                 <div style="position: relative; width: 100px; height: 100px; display: flex; justify-content: center; align-items: center;">
-                    <div class="balloon b1" onclick="popBalloon(this, 'photo1')"></div>
-                    <img id="photo1" class="photo-reveal" src="photo1.jpg">
+                    <div class="balloon b1" onclick="popBalloon(this, 'card1')"></div>
+                    <div id="card1" class="memory-card">
+                        <img class="photo-reveal" src="photo1.jpg">
+                        <div class="memory-note">Cute Memory 1 ❤️</div>
+                    </div>
                 </div>
+                
                 <div style="position: relative; width: 100px; height: 100px; display: flex; justify-content: center; align-items: center;">
-                    <div class="balloon b2" onclick="popBalloon(this, 'photo2')"></div>
-                    <img id="photo2" class="photo-reveal" src="photo2.jpg">
+                    <div class="balloon b2" onclick="popBalloon(this, 'card2')"></div>
+                    <div id="card2" class="memory-card">
+                        <img class="photo-reveal" src="photo2.jpg">
+                        <div class="memory-note">Best Day Ever! ✨</div>
+                    </div>
                 </div>
+                
                 <div style="position: relative; width: 100px; height: 100px; display: flex; justify-content: center; align-items: center;">
-                    <div class="balloon b3" onclick="popBalloon(this, 'photo3')"></div>
-                    <img id="photo3" class="photo-reveal" src="photo3.jpg">
+                    <div class="balloon b3" onclick="popBalloon(this, 'card3')"></div>
+                    <div id="card3" class="memory-card">
+                        <img class="photo-reveal" src="photo3.jpg">
+                        <div class="memory-note">My Favorite Smile 😊</div>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div id="vault-lock-screen" class="lock-stack hidden">
-            <h2>Who irritates you the most?</h2>
-            <p class="hint-text">(Hint: What do you call him?)</p>
-
-            <div id="lock2" class="lock-graphic">
-                <div class="shackle"></div>
-                <div class="heart-body"><div class="keyhole"></div></div>
-            </div>
-            <input type="password" id="videoPassInput" placeholder="Name">
-            <button class="action-btn" onclick="unlockVideo()">Open It</button>
-            <p id="video-error-msg" style="color:#ff6b6b; display:none; font-weight:bold;">Oops! Wrong code ❤️</p>
-        </div>
-
-        <div id="video-screen" class="lock-stack hidden">
-            <video id="finalVideo" controls><source src="myvideo.mp4" type="video/mp4"></video>
-            <button class="action-btn" onclick="triggerFinale()">The Finale ✨</button>
         </div>
 
     </div>
@@ -360,12 +200,9 @@
     <div id="gun" class="realistic-gun hidden"><div class="gun-scope metal"></div><div class="gun-barrel-long metal"></div><div class="gun-body metal"></div></div>
 
     <script>
-        // CONFIG - Case insensitive checks added below
         const MAIN_PASSWORD = "deboleena"; 
-        const VIDEO_PASSWORD = "bubu"; 
         let balloonsPopped = 0;
 
-        // Create Floating Hearts
         function createHearts() {
             const container = document.getElementById('heart-bg');
             const hearts = ['❤️', '💖', '🌸', '✨'];
@@ -382,7 +219,6 @@
         createHearts();
 
         function checkPassword() {
-            // Case-insensitive check
             if (document.getElementById('passwordInput').value.toLowerCase() === MAIN_PASSWORD) {
                 document.getElementById('lock1').classList.add('unlocked');
                 setTimeout(() => {
@@ -418,27 +254,10 @@
             }
         }
 
-        function goToVault() {
+        // DIRECT FINALE TRIGGER (No more 2nd lock or video)
+        function triggerFinale() {
             document.getElementById('game-screen').classList.add('hidden');
             document.getElementById('gun').classList.add('hidden');
-            document.getElementById('vault-lock-screen').classList.remove('hidden');
-        }
-
-        function unlockVideo() {
-            // Case-insensitive check
-            if (document.getElementById('videoPassInput').value.toLowerCase() === VIDEO_PASSWORD) {
-                document.getElementById('lock2').classList.add('unlocked');
-                setTimeout(() => {
-                    document.getElementById('vault-lock-screen').classList.add('hidden');
-                    document.getElementById('video-screen').classList.remove('hidden');
-                    document.getElementById('finalVideo').play();
-                }, 1000);
-            } else { document.getElementById('video-error-msg').style.display = 'block'; }
-        }
-
-        function triggerFinale() {
-            document.getElementById('finalVideo').pause();
-            document.getElementById('video-screen').classList.add('hidden');
             document.getElementById('main-container').classList.add('hidden');
             document.body.classList.add('faded-black');
             const text = document.getElementById('transition-text');
@@ -458,24 +277,9 @@
         const progressFill = document.getElementById('progress');
         const playBtn = document.getElementById('playBtn');
 
-        function playMusic() {
-            audio.play();
-            playBtn.innerHTML = "⏸"; // Change icon to Pause
-        }
-
-        function togglePlay() {
-            if(audio.paused) {
-                audio.play();
-                playBtn.innerHTML = "⏸"; // Change to Pause
-            } else {
-                audio.pause();
-                playBtn.innerHTML = "▶"; // Change to Play
-            }
-        }
-
-        audio.ontimeupdate = function() { 
-            if(audio.duration) progressFill.style.width = (audio.currentTime/audio.duration)*100 + "%"; 
-        };
+        function playMusic() { audio.play(); playBtn.innerHTML = "⏸"; }
+        function togglePlay() { if(audio.paused) { audio.play(); playBtn.innerHTML = "⏸"; } else { audio.pause(); playBtn.innerHTML = "▶"; } }
+        audio.ontimeupdate = function() { if(audio.duration) progressFill.style.width = (audio.currentTime/audio.duration)*100 + "%"; };
     </script>
 </body>
 </html>
